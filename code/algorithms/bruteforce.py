@@ -1,8 +1,8 @@
 import time
-from .utils import MAX_DIST, distance
+from TP1.code.algorithms.utils import MAX_DIST, distance
 
 
-def brute_force(points):
+def brute_force(points) -> float:
     """ Si le nombre de points est suffisamment petit, on préfère utiliser cet algorithme.
     """
     dist_min = MAX_DIST
@@ -13,9 +13,14 @@ def brute_force(points):
     return dist_min
 
 
-def execute_brute_force(points):
+def execute_brute_force(points) -> float:
     start = time.time()
     min_brute_force = brute_force(points)
     end = time.time()
     # print("BF: ", min_brute_force)
     return end - start
+
+
+if __name__ == "__main__":
+    """ dummy """
+    print(brute_force([(1, 2), (56, 1), (3, 3), (5, 56)]))

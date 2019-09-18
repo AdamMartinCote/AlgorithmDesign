@@ -15,4 +15,7 @@ if __name__ == "__main__":
                         help="affiche le temps d’exécution en ms, sans unité ni texte superflu")
     args = parser.parse_args()
 
-    print(args)
+    if args.algorithme == 'brute':
+        pass
+    elif args.algorithme == 'seuil':
+        pass
