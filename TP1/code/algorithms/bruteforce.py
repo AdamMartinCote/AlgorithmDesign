@@ -1,5 +1,6 @@
 import time
-from algorithms.utils import MAX_DIST, distance
+
+from TP1.code.algorithms.utils import MAX_DIST, distance
 
 
 def brute_force(points) -> float:
