@@ -1,5 +1,7 @@
 #!/bin/bash
 
+ALGORITHMS_PATH='code/algorithms'
+
 OPTIONS=""
 while [[ $# -gt 0 ]]
 do
@@ -25,4 +27,6 @@ esac
 shift
 done
 
-./points -e $EX_PATH -a $ALGO $OPTIONS
+#./points -e $EX_PATH -a $ALGO $OPTIONS
+
+python3 ./${ALGORITHMS_PATH}/tp1.py -e $EX_PATH -a $ALGO $OPTIONS
