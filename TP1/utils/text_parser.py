@@ -13,5 +13,3 @@ def txt_to_array(file_path):
     return points
 # file_path = input("Your file path: ")
 points = txt_to_array("./../code/tmp.txt")
-for p in points:
-    print(p.x,p.y)
