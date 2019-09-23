@@ -1,9 +1,11 @@
 import argparse
 
 from algorithms.bruteforce import brute_force
+from algorithms.seuil import seuil
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-a", "--algorithme",
+                    required=True,
                     choices=['brute', 'seuil'],
                     help="algorithme utilisé")
 parser.add_argument("-e", "--path_vers_exemplaire",
@@ -19,4 +21,5 @@ if args.algorithme == 'brute':
     val = brute_force([[1, 2], [4, 4]])
     print(val)
 elif args.algorithme == 'seuil':
-    pass
+    val = seuil([[1, 2], [3, 4]], [[2, 3], [4, 5]], 1)
+    print(val)
