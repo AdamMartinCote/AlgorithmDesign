@@ -1,13 +1,11 @@
-#!/usr/bin/env python3
-
 import argparse
 
-# from TP1.code.algorithms.bruteforce import brute_force
 from algorithms.bruteforce import brute_force
+from algorithms.seuil import seuil
 
-# if __name__ == "__main__":
 parser = argparse.ArgumentParser()
 parser.add_argument("-a", "--algorithme",
+                    required=True,
                     choices=['brute', 'seuil'],
                     help="algorithme utilisé")
 parser.add_argument("-e", "--path_vers_exemplaire",
@@ -19,7 +17,9 @@ parser.add_argument("-t", "--show_t", action='store_true',
 args = parser.parse_args()
 
 if args.algorithme == 'brute':
-    val = brute_force([(1, 2), (4, 4)])
+
+    val = brute_force([[1, 2], [4, 4]])
     print(val)
 elif args.algorithme == 'seuil':
-    pass
+    val = seuil([[1, 2], [3, 4]], [[2, 3], [4, 5]], 1)
+    print(val)

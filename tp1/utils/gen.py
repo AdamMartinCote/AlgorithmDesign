@@ -57,3 +57,7 @@ with open(fn, 'w') as f:
     for i in range(n):
         f.write(str(points[i][0]) + ' ' + str(points[i][1]) + '\n')
 f.close()
+
+
+def foo():
+    print("foo")
