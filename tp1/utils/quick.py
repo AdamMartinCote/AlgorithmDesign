@@ -1,6 +1,3 @@
-import numpy as np
-
-
 def quicksort(table, first, last, shift):
     if first < last:
         z = partition(table, first, last, shift)

@@ -1,11 +1,12 @@
-from algorithms.bruteforce import execute_brute_force
-from algorithms.seuil import execute_DpR
-from utils.graphGenerator import graphGenerator
-from utils.automaticGen import gen
+import glob
+
+import numpy as np
 
 import utils.text_parser
-import glob
-import numpy as np
+from algorithms.bruteforce import execute_brute_force
+from algorithms.seuil import execute_DpR
+from utils.automaticGen import gen
+from utils.graphGenerator import graphGenerator
 
 
 def collectResults():

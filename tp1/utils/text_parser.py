@@ -1,15 +1,37 @@
-import point 
-import numpy as np
+from utils.quick import quicksort
 
-def txt_to_array(file_path):
-    f = open(file_path,"r");f.readline() #Skip first line 
+
+def fileToArrayBruteMethod(file_path):
+    f = open(file_path, "r")
+    f.readline()  # Skip first line
     points = []
-    for l in f:
-        line = l.split()
-        x    = int(line[0])
-        y    = int(line[1])
-        pt = point.Point(x,y)
-        points.append(pt)
+    try:
+        for l in f:
+            line = l.split()
+            x = int(line[0])
+            y = int(line[1])
+            points.append([x, y])
+    except:
+        raise ValueError()
+    f.close()
     return points
-# file_path = input("Your file path: ")
-points = txt_to_array("./../code/tmp.txt")
+
+
+def fileToArraySeuilMethod(file_path):
+    f = open(file_path, "r")
+    f.readline()  # Skip first line
+    xSortedPoints = []
+    ySortedPoints = []
+    points = []
+    try:
+        for l in f:
+            line = l.split()
+            x = int(line[0])
+            y = int(line[1])
+            points.append([x, y])
+        xSortedPoints = quicksort(points, 0, len(points) - 1, 0)
+        ySortedPoints = quicksort(points, 0, len(points) - 1, 1)
+    except:
+        raise ValueError()
+    f.close()
+    return xSortedPoints, ySortedPoints

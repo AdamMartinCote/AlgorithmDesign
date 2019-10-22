@@ -33,16 +33,16 @@ import sys
 n = -1
 fn = ''
 
-if (len(sys.argv) <= 2):
+if len(sys.argv) <= 2:
     exit('Erreur: Pas assez d\'arguments. Vous devez indiquer le \
 nombre de points à générer et le nom du fichier de sortie.')
 
-if (len(sys.argv) > 3):
+if len(sys.argv) > 3:
     exit('Erreur: Trop d\'arguments.')
 
 try:
     n = int(sys.argv[1])
-    if (n <= 0):
+    if n <= 0:
         raise ValueError()
 except:
     exit('Erreur: Le premier argument (nombre de points) doit être \
