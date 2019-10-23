@@ -1,7 +1,8 @@
 import glob
+import os
+import time
 from typing import List, Dict
 
-import os
 import numpy as np
 
 import utils.text_parser
@@ -17,8 +18,10 @@ start_at = 1
 assay_number = 10
 step = 1000
 
+default_exemplaire_path = "./profiling/data"
 
-def collectResults():
+
+def collectResults(exemplaire_path=default_exemplaire_path):
     dataBF = []
     dataDpR = []
     dataDpRSeuil = []
@@ -28,7 +31,7 @@ def collectResults():
     for nbData in range(start_at * step, assay_number * step, step):
         gen(nbData, 3)  # arg1: Nombre de points , arg2: Nombre d'echantillons
         print('\nNumber of data: ', nbData, '\n')
-        meanBf, meanDpR, meanDpRSeuil = profile_all_for_given_size(bfFlag, seuil)
+        meanBf, meanDpR, meanDpRSeuil = profile_all_for_given_size(bfFlag, seuil, exemplaire_path)
         print('\nAverage BF      : ', meanBf)
         print('Average Dpr     : ', meanDpR)
         print('Average DprSeuil: ', meanDpRSeuil, '\n')
@@ -44,22 +47,25 @@ def collectResults():
     writeGraph(dataBF, dataDpR, dataDpRSeuil, dataNb, seuil)
 
 
-def profile_brute_force():
-    filepath_list: List[str] = get_filepath_list_from_directory_path()
+def profile_brute_force(exemplaire_path=default_exemplaire_path, display_time=False, display_distance=False):
+    start = time.time()
+    filepath_list: List[str] = get_filepath_list_from_directory_path(exemplaire_path)
     exemplaires_list: List[(int, int,)] = [
         parse_exemplaire_filepath_to_list(filepath) for filepath in filepath_list if os.path.isfile(filepath)
     ]
     values_by_size: Dict[int, List[float]] = {}
     for exemplaire in exemplaires_list:
         size = len(exemplaire)
-        print(f"computing exemplaire of size {size}")
+        time_value = execute_brute_force(exemplaire)
+        if display_time:
+            print(str(size) + " ", end='')
+            print(time_value)
         point = values_by_size.get(size)
         if point:
-            point.append(execute_brute_force(exemplaire))
+            point.append(time_value)
         else:
             values_by_size[size] = [execute_brute_force(exemplaire)]
     graph_points = {key: np.mean(value) for key, value in values_by_size.items()}
-    print(graph_points)
 
     puissanceGraph(np.log2(list(graph_points.keys())), np.log2(list(graph_points.values())), "Force brute")
 
@@ -70,9 +76,16 @@ def profile_brute_force():
     rapportGraph(list(graph_points.keys()), ratioBF2, ' - centre (x^2.0)')
     rapportGraph(list(graph_points.keys()), ratioBF3, ' - limite droite (x^2.1)')
 
+    # end = time.time()
+    # if display_time:
+    #     print(end - start)
 
-def profile_all_for_given_size(flag, seuil):
-    files = get_filepath_list_from_directory_path()
+    if display_distance:
+        pass
+
+
+def profile_all_for_given_size(flag, seuil, path):
+    files = get_filepath_list_from_directory_path(path)
     if flag:
         bfMean = get_mean_time_from_brute_force(files)
     else:
@@ -82,8 +95,8 @@ def profile_all_for_given_size(flag, seuil):
     return bfMean, DpRMean, DpRMeanSeuil
 
 
-def get_filepath_list_from_directory_path():
-    path = './profiling/data'
+def get_filepath_list_from_directory_path(path):
+    # path = './profiling/data'
     files = None
     try:
         files = glob.glob(path + '/*')

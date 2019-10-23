@@ -1,35 +1,40 @@
 import argparse
 
 import profiling.profile_script as profiler
-from algorithms.seuil import seuil
 from utils.automaticGen import gen
+
+display_time = False
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-a", "--algorithme",
-                    #required=True,
-                    choices=['brute', 'seuil', 'profile'],
+                    choices=['brute', 'seuil'],
                     help="algorithme utilisé")
 parser.add_argument("-e", "--path_vers_exemplaire",
-                    help="specifier le chemin d'un exemplaire")
+                    help="specifier le chemin d'un exemplaire (fichier ou répertoire)")
 parser.add_argument("-p", "--show_p", action='store_true',
                     help="affiche la plus petite distance entre deux points, sans texte superflu")
 parser.add_argument("-t", "--show_t", action='store_true',
                     help="affiche le temps d’exécution en ms, sans unité ni texte superflu")
 parser.add_argument("-g", "--generate",
-                    help="genere un exemplaire de taille N")
-parser.add_argument("-r", "--repetitions")
+                    help="génère un exemplaire de taille N")
+parser.add_argument("-r", "--repetitions",
+                    help="nombre d'exemplaires à générer")
 args = parser.parse_args()
 
-if args.algorithme == 'brute':
-    raise NotImplemented
-elif args.algorithme == 'seuil':
-    val = seuil([[1, 2], [3, 4]], [[2, 3], [4, 5]], 1)
-    print(val)
+options = {'display_time': args.show_t,
+           'display_distance': args.show_p}
 
-elif args.algorithme == 'profile':
-    #profiler.collectResults()
-    profiler.profile_brute_force()
+if args.algorithme == 'brute':
+    if args.path_vers_exemplaire:
+        profiler.profile_brute_force(args.path_vers_exemplaire, **options)
+    else:
+        profiler.profile_brute_force(**options)
+elif args.algorithme == 'seuil':
+    raise NotImplemented
 
 elif args.generate:
-    gen(int(args.generate), args.repetitions or 3)
+    gen(int(args.generate), int(args.repetitions) or 3)
 
+
+else:
+    parser.usage()
