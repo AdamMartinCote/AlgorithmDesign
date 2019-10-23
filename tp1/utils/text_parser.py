@@ -1,7 +1,9 @@
+from typing import List
+
 from utils.quick import quicksort
 
 
-def fileToArrayBruteMethod(file_path):
+def parse_exemplaire_filepath_to_list(file_path) -> List[List[int]]:
     f = open(file_path, "r")
     f.readline()  # Skip first line
     points = []
@@ -17,7 +19,7 @@ def fileToArrayBruteMethod(file_path):
     return points
 
 
-def fileToArraySeuilMethod(file_path):
+def get_sorted_xs_and_ys_from_filepath(file_path) -> (List[int], List[int]):
     f = open(file_path, "r")
     f.readline()  # Skip first line
     xSortedPoints = []
@@ -35,3 +37,5 @@ def fileToArraySeuilMethod(file_path):
         raise ValueError()
     f.close()
     return xSortedPoints, ySortedPoints
+
+

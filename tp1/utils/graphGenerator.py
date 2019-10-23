@@ -1,3 +1,5 @@
+from typing import List
+
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -20,10 +22,14 @@ def graphGenerator(dataBF, dataDpR, dataDpRSeuil, dataNb, seuil):
     # ratioDpR      = genRatioNLogNArray(dataDpR,dataNb)
     ratioDpRSeuil = genRatioLin(dataDpRSeuil, dataNb)
     ratioDpR = genRatioLin(dataDpR, dataNb)
-    ratioBF = genRatioExpArray(dataBF, dataNb)
-    rapportGraph(dataNb, ratioDpRSeuil, DPR + str(seuil))
-    rapportGraph(dataNb, ratioDpR, DPR1)
-    rapportGraph(dataNb, ratioBF, BF)
+    ratioBF1 = genRatioExpArray(dataBF, dataNb, lambda x: x ** 1.9)
+    ratioBF2 = genRatioExpArray(dataBF, dataNb, lambda x: x ** 2)
+    ratioBF3 = genRatioExpArray(dataBF, dataNb, lambda x: x ** 2.1)
+    # rapportGraph(dataNb, ratioDpRSeuil, DPR + str(seuil))
+    # rapportGraph(dataNb, ratioDpR, DPR1)
+    rapportGraph(dataNb, ratioBF1, ' left limit')
+    rapportGraph(dataNb, ratioBF2, ' center')
+    rapportGraph(dataNb, ratioBF3, ' right limit')
 
     # Test de constantes
     # fDprSeuil = genNLogNArray(dataNb)
@@ -58,7 +64,7 @@ def puissanceGraph(logx, logy, name):
     ax.grid(visible=True)
     ax.set_xlabel('log(Nombre de points)')
     ax.set_ylabel('log(Temps(ms))')
-    ax.plot(logx, logy, '-k', lw=2, label=name)
+    ax.plot(logx, logy, '-k', lw=2, label=name, linestyle="", marker="o")
     ax.legend()
     plt.show()
 
@@ -70,7 +76,7 @@ def rapportGraph(x, ratio, name):
     ax.grid(visible=True)
     ax.set_xlabel('Nombre de points')
     ax.set_ylabel('Temps(ms)/f(x)')
-    ax.plot(x, ratio, '-k', lw=2, label=name)
+    ax.plot(x, ratio, '-k', lw=2, label=name, linestyle="", marker="o")
     ax.legend()
     plt.show()
 
@@ -94,10 +100,10 @@ def genRatioNLogNArray(data, dataNb):
     return ratioArray
 
 
-def genRatioExpArray(data, dataNb):
+def genRatioExpArray(data, dataNb, f) -> List[float]:
     ratioArray = []
     for nb, val in zip(dataNb, data):
-        ratioArray.append(val / nb ** 2)
+        ratioArray.append(val / f(nb))
     return ratioArray
 
 

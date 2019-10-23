@@ -5,13 +5,13 @@ import glob
 
 def gen(nbData, nbFiles):
     path = './code/profiling/data'
-    try:
-        os.mkdir(path)
-    except:
-        print('Removing previous data...\n')
-        files = glob.glob(path + '/*')
-        for f in files:
-            os.remove(f)
+    #try:
+    #    os.mkdir(path)
+    #except:
+    #    #print('Removing previous data...\n')
+    #    files = glob.glob(path + '/*')
+    #    for f in files:
+    #        os.remove(f)
 
     for i in range(nbFiles):
         fn = 'code/profiling/data/' + str(nbData) + '-' + str(i) + '.txt'
