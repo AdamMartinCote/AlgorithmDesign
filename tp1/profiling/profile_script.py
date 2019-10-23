@@ -9,8 +9,8 @@ from algorithms.bruteforce import execute_brute_force
 from algorithms.seuil import execute_DpR
 from utils.automaticGen import gen
 from utils.graphGenerator import genRatioExpArray, rapportGraph
+from utils.graphGenerator import puissanceGraph, constantesGraph
 from utils.graphGenerator import writeGraph
-from utils.graphGenerator import puissanceGraph
 from utils.text_parser import parse_exemplaire_filepath_to_list
 
 start_at = 1
@@ -63,12 +63,29 @@ def profile_brute_force(exemplaire_path=default_exemplaire_path, display_time=Fa
             values_by_size[size] = [time_value]
     graph_points = {key: np.mean(value) for key, value in values_by_size.items()}
 
-    puissanceGraph(np.log2(list(graph_points.keys())), np.log2(list(graph_points.values())), "Force brute")
+    puissanceGraph(logx=np.log2(list(graph_points.keys())),
+                   logy=np.log2(list(graph_points.values())),
+                   name="Force brute")
 
-    print_rapport_graph_with_limit(graph_points)
+    print_rapport_graph_with_limits(graph_points)
+
+    print_constantes_graph(graph_points, algo_name="force brute")
 
     if display_distance:
         print(execute_brute_force.min_dist)
+
+
+def print_constantes_graph(graph_points, algo_name):
+    f = lambda x: x
+    constantesGraph(list(map(f, graph_points.values())),
+                    list(graph_points.keys()), name=f"algo_name")
+
+
+def print_constantes_graph_iter(graph_points, algo_name):
+    for i in np.arange(1, 3, 0.2):
+        f = lambda x: x ** i
+        constantesGraph(list(map(f, graph_points.values())),
+                        list(graph_points.keys()), name=f"algo_name {i}")
 
 
 def profile_seuil(seuil=1, exemplaire_path=default_exemplaire_path, display_time=False, display_distance=False):
@@ -80,7 +97,6 @@ def profile_seuil(seuil=1, exemplaire_path=default_exemplaire_path, display_time
                                  sorted(exemplaire, key=lambda x: x[1]),
                                  seuil)
         if display_time:
-            print(str(size) + " ", end='')
             print(time_value)
         point = values_by_size.get(size)
         if point:
@@ -89,23 +105,32 @@ def profile_seuil(seuil=1, exemplaire_path=default_exemplaire_path, display_time
             values_by_size[size] = [time_value]
     graph_points = {key: np.mean(value) for key, value in values_by_size.items()}
 
-    puissanceGraph(np.log2(list(graph_points.keys())),
-                   np.log2(list(graph_points.values())),
-                   f"Recursif de seuil {seuil}")
+    puissanceGraph(logx=np.log2(list(graph_points.keys())),
+                   logy=np.log2(list(graph_points.values())),
+                   name=f"Recursif de seuil {seuil}")
 
-    print_rapport_graph_with_limit(graph_points)
+    print_rapport_graph_with_limits(graph_points)
+
+    print_constantes_graph(graph_points, algo_name=f"seuil {seuil}")
 
     if display_distance:
         print(execute_brute_force.min_dist)
 
 
-def print_rapport_graph_with_limit(graph_points):
-    ratioBF1 = genRatioExpArray(list(graph_points.values()), list(graph_points.keys()), lambda x: x ** 1.9)
-    ratioBF2 = genRatioExpArray(list(graph_points.values()), list(graph_points.keys()), lambda x: x ** 2)
-    ratioBF3 = genRatioExpArray(list(graph_points.values()), list(graph_points.keys()), lambda x: x ** 2.1)
-    rapportGraph(list(graph_points.keys()), ratioBF1, ' - limite gauche (x^1.9)')
-    rapportGraph(list(graph_points.keys()), ratioBF2, ' - centre (x^2.0)')
-    rapportGraph(list(graph_points.keys()), ratioBF3, ' - limite droite (x^2.1)')
+def print_rapport_graph_with_limits(graph_points):
+    exponent = 2.0
+    delta = 0.1
+    fs = [
+        lambda x: x ** (exponent - delta),
+        lambda x: x ** exponent,
+        lambda x: x ** (exponent + delta),
+    ]
+    ratioBF1 = genRatioExpArray(list(graph_points.values()), list(graph_points.keys()), fs[0])
+    ratioBF2 = genRatioExpArray(list(graph_points.values()), list(graph_points.keys()), fs[1])
+    ratioBF3 = genRatioExpArray(list(graph_points.values()), list(graph_points.keys()), fs[2])
+    rapportGraph(list(graph_points.keys()), ratioBF1, f' - limite gauche (x^{exponent - delta})')
+    rapportGraph(list(graph_points.keys()), ratioBF2, f' - centre (x^{exponent})')
+    rapportGraph(list(graph_points.keys()), ratioBF3, f' - limite droite (x^{exponent + delta})')
 
 
 def get_exemplaire_list(exemplaire_path):

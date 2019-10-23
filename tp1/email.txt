@@ -1,3 +1,2 @@
 adam.martin-cote@polymtl.ca
 vincent.hogues@polymtl.ca
-# TODO

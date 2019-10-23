@@ -7,6 +7,8 @@ BF = 'Brute force'
 DPR = 'Recursif seuil '
 DPR1 = 'Recursif seuil 1'
 
+plot_options = {"lw": 2, "linestyle": "", "marker": "o"}
+
 
 def writeGraph(dataBF, dataDpR, dataDpRSeuil, dataNb, seuil):
     plt.ion()
@@ -64,7 +66,8 @@ def puissanceGraph(logx, logy, name):
     ax.grid(visible=True)
     ax.set_xlabel('log(Nombre de points)')
     ax.set_ylabel('log(Temps(ms))')
-    ax.plot(logx, logy, '-k', lw=2, label=name, linestyle="", marker="o")
+    # ax.plot(logx, logy, label=name, linestyle="", marker="o")
+    ax.plot(logx, logy, label=name, **plot_options)
     ax.legend()
     plt.show()
 
@@ -76,7 +79,7 @@ def rapportGraph(x, ratio, name):
     ax.grid(visible=True)
     ax.set_xlabel('Nombre de points')
     ax.set_ylabel('Temps(ms)/f(x)')
-    ax.plot(x, ratio, '-k', lw=2, label=name, linestyle="", marker="o")
+    ax.plot(x, ratio, label=name, **plot_options)
     ax.legend()
     plt.show()
 
@@ -88,7 +91,7 @@ def constantesGraph(fx, y, name):
     ax.grid(visible=True)
     ax.set_xlabel('f(x)')
     ax.set_ylabel('Temps(ms)')
-    ax.plot(fx, y, '-k', lw=2, label=name)
+    ax.plot(fx, y, label=name, **plot_options)
     ax.legend()
     plt.show()
 

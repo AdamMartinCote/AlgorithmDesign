@@ -24,8 +24,9 @@ parser.add_argument("-s", "--seuil",
 args = parser.parse_args()
 
 options = {'display_time': args.show_t,
-           'display_distance': args.show_p,
-           'seuil': int(args.seuil) or 1}
+           'display_distance': args.show_p}
+if args.seuil:
+    options['seuil'] = int(args.seuil)
 
 if args.algorithme == 'brute':
     if args.path_vers_exemplaire:
@@ -40,8 +41,9 @@ elif args.algorithme == 'seuil':
 
 
 elif args.generate:
-    gen(int(args.generate), int(args.repetitions) or 3)
+    gen(int(args.generate),
+        int(args.repetitions) or 3)
 
 
 else:
-    parser.usage()
+    parser.print_usage()
