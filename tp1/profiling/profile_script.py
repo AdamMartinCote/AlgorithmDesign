@@ -9,7 +9,7 @@ from algorithms.bruteforce import execute_brute_force
 from algorithms.seuil import execute_DpR
 from utils.automaticGen import gen
 from utils.graphGenerator import genRatioExpArray, rapportGraph
-from utils.graphGenerator import graphGenerator
+from utils.graphGenerator import writeGraph
 from utils.graphGenerator import puissanceGraph
 from utils.text_parser import parse_exemplaire_filepath_to_list
 
@@ -157,10 +157,6 @@ def get_mean_time_from_brute_force(files):
         print('BF(time)     : ', bfTime)
         bfData.append(bfTime)
     return np.mean(bfData)
-
-
-def writeGraph(dataBF, dataDpR, dataDpRSeuil, dataNb, seuil):
-    graphGenerator(dataBF, dataDpR, dataDpRSeuil, dataNb, seuil)
 
 
 def askBF():

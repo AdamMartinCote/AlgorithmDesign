@@ -8,7 +8,7 @@ DPR = 'Recursif seuil '
 DPR1 = 'Recursif seuil 1'
 
 
-def graphGenerator(dataBF, dataDpR, dataDpRSeuil, dataNb, seuil):
+def writeGraph(dataBF, dataDpR, dataDpRSeuil, dataNb, seuil):
     plt.ion()
     comparaisonGraph(dataBF, dataDpR, dataDpRSeuil, dataNb, seuil)
 
