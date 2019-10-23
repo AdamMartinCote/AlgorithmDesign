@@ -16,8 +16,11 @@ def brute_force(points: List[List[int]]) -> float:
 
 
 def execute_brute_force(points) -> float:
+    if 'min_dist' not in execute_brute_force.__dict__:
+        execute_brute_force.min_dist = 999999
     start = time.time()
     min_brute_force = brute_force(points)
+    if execute_brute_force.min_dist > min_brute_force:
+        execute_brute_force.min_dist = min_brute_force
     end = time.time()
-    # print("BF: ", min_brute_force)
     return end - start

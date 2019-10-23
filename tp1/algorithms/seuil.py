@@ -70,5 +70,4 @@ def execute_DpR(sorted_points_x, sorted_points_y, seuil_recur):
     start = time.time()
     min_dpr = seuil(sorted_points_x, sorted_points_y, seuil_recur)
     end = time.time()
-    # print("DPR: ", min_dpr)
     return end - start

@@ -19,10 +19,13 @@ parser.add_argument("-g", "--generate",
                     help="génère un exemplaire de taille N")
 parser.add_argument("-r", "--repetitions",
                     help="nombre d'exemplaires à générer")
+parser.add_argument("-s", "--seuil",
+                    help="seuil à utiliser (valeur par défaut = 1)")
 args = parser.parse_args()
 
 options = {'display_time': args.show_t,
-           'display_distance': args.show_p}
+           'display_distance': args.show_p,
+           'seuil': int(args.seuil) or 1}
 
 if args.algorithme == 'brute':
     if args.path_vers_exemplaire:
@@ -30,7 +33,11 @@ if args.algorithme == 'brute':
     else:
         profiler.profile_brute_force(**options)
 elif args.algorithme == 'seuil':
-    raise NotImplemented
+    if args.path_vers_exemplaire:
+        profiler.profile_seuil(exemplaire_path=args.path_vers_exemplaire, **options)
+    else:
+        profiler.profile_seuil(**options)
+
 
 elif args.generate:
     gen(int(args.generate), int(args.repetitions) or 3)

@@ -1,6 +1,5 @@
 import glob
 import os
-import time
 from typing import List, Dict
 
 import numpy as np
@@ -17,6 +16,7 @@ from utils.text_parser import parse_exemplaire_filepath_to_list
 start_at = 1
 assay_number = 10
 step = 1000
+min_distance = 99999999
 
 default_exemplaire_path = "./profiling/data"
 
@@ -48,11 +48,7 @@ def collectResults(exemplaire_path=default_exemplaire_path):
 
 
 def profile_brute_force(exemplaire_path=default_exemplaire_path, display_time=False, display_distance=False):
-    start = time.time()
-    filepath_list: List[str] = get_filepath_list_from_directory_path(exemplaire_path)
-    exemplaires_list: List[(int, int,)] = [
-        parse_exemplaire_filepath_to_list(filepath) for filepath in filepath_list if os.path.isfile(filepath)
-    ]
+    exemplaires_list = get_exemplaire_list(exemplaire_path)
     values_by_size: Dict[int, List[float]] = {}
     for exemplaire in exemplaires_list:
         size = len(exemplaire)
@@ -64,11 +60,46 @@ def profile_brute_force(exemplaire_path=default_exemplaire_path, display_time=Fa
         if point:
             point.append(time_value)
         else:
-            values_by_size[size] = [execute_brute_force(exemplaire)]
+            values_by_size[size] = [time_value]
     graph_points = {key: np.mean(value) for key, value in values_by_size.items()}
 
     puissanceGraph(np.log2(list(graph_points.keys())), np.log2(list(graph_points.values())), "Force brute")
 
+    print_rapport_graph_with_limit(graph_points)
+
+    if display_distance:
+        print(execute_brute_force.min_dist)
+
+
+def profile_seuil(seuil=1, exemplaire_path=default_exemplaire_path, display_time=False, display_distance=False):
+    exemplaires_list = get_exemplaire_list(exemplaire_path)
+    values_by_size: Dict[int, List[float]] = {}
+    for exemplaire in exemplaires_list:
+        size = len(exemplaire)
+        time_value = execute_DpR(sorted(exemplaire, key=lambda x: x[0]),
+                                 sorted(exemplaire, key=lambda x: x[1]),
+                                 seuil)
+        if display_time:
+            print(str(size) + " ", end='')
+            print(time_value)
+        point = values_by_size.get(size)
+        if point:
+            point.append(time_value)
+        else:
+            values_by_size[size] = [time_value]
+    graph_points = {key: np.mean(value) for key, value in values_by_size.items()}
+
+    puissanceGraph(np.log2(list(graph_points.keys())),
+                   np.log2(list(graph_points.values())),
+                   f"Recursif de seuil {seuil}")
+
+    print_rapport_graph_with_limit(graph_points)
+
+    if display_distance:
+        print(execute_brute_force.min_dist)
+
+
+def print_rapport_graph_with_limit(graph_points):
     ratioBF1 = genRatioExpArray(list(graph_points.values()), list(graph_points.keys()), lambda x: x ** 1.9)
     ratioBF2 = genRatioExpArray(list(graph_points.values()), list(graph_points.keys()), lambda x: x ** 2)
     ratioBF3 = genRatioExpArray(list(graph_points.values()), list(graph_points.keys()), lambda x: x ** 2.1)
@@ -76,12 +107,13 @@ def profile_brute_force(exemplaire_path=default_exemplaire_path, display_time=Fa
     rapportGraph(list(graph_points.keys()), ratioBF2, ' - centre (x^2.0)')
     rapportGraph(list(graph_points.keys()), ratioBF3, ' - limite droite (x^2.1)')
 
-    # end = time.time()
-    # if display_time:
-    #     print(end - start)
 
-    if display_distance:
-        pass
+def get_exemplaire_list(exemplaire_path):
+    filepath_list: List[str] = get_filepath_list_from_directory_path(exemplaire_path)
+    exemplaires_list: List[(int, int,)] = [
+        parse_exemplaire_filepath_to_list(filepath) for filepath in filepath_list if os.path.isfile(filepath)
+    ]
+    return exemplaires_list
 
 
 def profile_all_for_given_size(flag, seuil, path):
