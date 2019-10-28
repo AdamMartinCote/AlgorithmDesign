@@ -1,10 +1,12 @@
 import argparse
 
-#from src.algorithms.dynamic import Dynamic
+from src.algorithms.backtracking import Backtracking
+from src.algorithms.dynamic import Dynamic
 from src.algorithms.greedy import Greedy
 from src.roll import Roll
 
 display_time = False
+default_path = './exemplaires/10-6.txt'
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-a", "--algorithme",
@@ -21,20 +23,22 @@ parser.add_argument("-c", "--solution", action='store_true',
                          "avec chaque coupe séparée par un espace")
 args = parser.parse_args()
 
+algo = None
 options = {'display_time': args.show_t,
            'display_distance': args.show_p,
            'display_solution': args.solution}
 
 if args.algorithme == 'glouton':
-    algo = Greedy()
-    path = './exemplaires/10-1.txt'
-    roll = Roll(path)
-    algo.optimize_exemplaire(roll, **options)
+    algo = Greedy(**options)
 
 elif args.algorithme == 'progdyn':
-    raise NotImplemented
+    algo = Dynamic(**options)
 elif args.algorithme == 'backtrack':
-    raise NotImplemented
-
+    algo = Backtracking(**options)
 else:
     parser.print_usage()
+
+path = args.path_vers_exemplaire or default_path
+roll = Roll(path)
+algo.optimize_exemplaire(roll)
+

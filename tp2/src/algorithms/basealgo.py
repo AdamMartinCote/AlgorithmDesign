@@ -2,18 +2,17 @@ from src.roll import Roll
 
 
 class BaseAlgo:
-    def __init__(self):
-        pass
+    def __init__(self, display_solution=False, display_time=False, display_distance=False):
+        self.display_solution = display_solution
 
-    def optimize_exemplaire(self, roll: Roll, display_solution=False, display_time=False, display_distance=False):
+    def optimize_exemplaire(self, roll: Roll):
         # start timer
-        # raise NotImplemented(f"{self.__class__.__name__} should implement optimize_exemplaire")
-        cuts = self.run_algo(roll)
+        cuts = self.execute(roll)
         # end timer
         # report result....
 
-        if display_solution:
+        if self.display_solution:
             print(list(map(lambda x: x.i, cuts)))
 
-    def run_algo(self, roll: Roll):
+    def execute(self, roll: Roll):
         raise NotImplemented("class is abstract")

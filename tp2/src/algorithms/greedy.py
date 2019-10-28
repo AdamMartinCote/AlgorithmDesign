@@ -7,15 +7,17 @@ from src.roll import Roll
 
 
 class Greedy(BaseAlgo):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, **kwargs):
+        super().__init__(kwargs)
 
-    def run_algo(self, roll: Roll) -> List[Cut]:
-
-        roll_length_left = roll.size
-
+    def execute(self, roll: Roll) -> List[Cut]:
+        """
+        returns the optimal list of cuts according to this algorithm
+        """
         def get_best(acc: Cut, cut: Cut):
             return cut if cut.r_i > acc.r_i else acc
+
+        roll_length_left = roll.size
 
         solution: List[Cut] = []
         while roll_length_left > 0:
