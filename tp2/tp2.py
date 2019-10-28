@@ -1,7 +1,5 @@
 import argparse
 
-import profiling.profile_script as profiler
-from utils.automaticGen import gen
 
 display_time = False
 
