@@ -1,14 +1,14 @@
 from functools import reduce
 from typing import List
 
-from src.algorithms.basealgo import BaseAlgo
+from src.algorithms.abstractbasealgo import AbstractBaseAlgo
 from src.cut import Cut
 from src.roll import Roll
 
 
-class Greedy(BaseAlgo):
+class Greedy(AbstractBaseAlgo):
     def __init__(self, **kwargs):
-        super().__init__(kwargs)
+        super().__init__(**kwargs)
 
     def execute(self, roll: Roll) -> List[Cut]:
         """

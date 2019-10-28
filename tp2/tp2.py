@@ -25,7 +25,7 @@ args = parser.parse_args()
 
 algo = None
 options = {'display_time': args.show_t,
-           'display_distance': args.show_p,
+           'display_price': args.show_p,
            'display_solution': args.solution}
 
 if args.algorithme == 'glouton':
