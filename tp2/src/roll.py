@@ -1,4 +1,4 @@
-from tp2.src.cut import Cut
+from src.cut import Cut
 
 
 class Roll:
@@ -15,10 +15,12 @@ class Roll:
                 for cut_size, cut_worth in zip(line_2.split(),
                                                line_3.split()):
                     # print(f"cut: {cut_size}:{cut_worth}")
-                    self.cuts.append(Cut(size=cut_size,
-                                         worth=cut_worth))
-
+                    i = int(cut_size)
+                    p_i = int(cut_worth)
+                    self.cuts.append(Cut(i, p_i))
+                pass
             except ValueError:
                 raise ValueError("file format error")
             finally:
                 file.close()
+
