@@ -10,7 +10,7 @@ class AbstractBaseAlgo:
         self.display_price = display_price
         self.display_time = display_time
 
-    def optimize_exemplaire(self, roll: Roll):
+    def __call__(self, roll: Roll):
         start_time = time.time()
         cuts = self.execute(roll)
         end_time = time.time()

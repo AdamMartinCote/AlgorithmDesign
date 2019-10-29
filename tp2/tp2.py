@@ -5,7 +5,6 @@ from src.algorithms.dynamic import Dynamic
 from src.algorithms.greedy import Greedy
 from src.roll import Roll
 
-display_time = False
 default_path = './exemplaires/10-6.txt'
 
 parser = argparse.ArgumentParser()
@@ -40,5 +39,5 @@ else:
 
 path = args.path_vers_exemplaire or default_path
 roll = Roll(path)
-algo.optimize_exemplaire(roll)
+algo(roll)
 
