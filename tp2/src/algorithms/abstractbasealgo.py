@@ -1,5 +1,6 @@
 import time
 from functools import reduce
+from typing import List
 
 from src.roll import Roll
 
@@ -27,5 +28,5 @@ class AbstractBaseAlgo:
         if self.display_time:
             print(end_time - start_time)
 
-    def execute(self, roll: Roll):
+    def execute(self, roll: Roll) -> List:
         raise NotImplemented("class is abstract")
