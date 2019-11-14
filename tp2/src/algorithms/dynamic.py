@@ -1,4 +1,5 @@
-from typing import List
+import math
+from typing import List, Tuple
 
 from src.algorithms.abstractbasealgo import AbstractBaseAlgo
 from src.roll import Roll
@@ -22,9 +23,39 @@ class Dynamic(AbstractBaseAlgo):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def execute(self, roll: Roll):
+    def execute(self, roll: Roll) -> Tuple[int, List[int]]:
+        path: List[List[int]] = [[]]
 
-        j: int = roll.size
-        r: List[int]
+        def get_r_j(j: int) -> int:
+            max_val: int = -1
+            max_i: int = 0
+            for i in range(1, j + 1):
+                local_r = roll[i] + r[j - i]
+                if local_r > max_val:
+                    max_val = local_r
+                    max_i = i
+            path.append(path[j - max_i] + [roll.cuts[max_i - 1]])
+            return max_val
+
+        r: List[int] = [0]
+        for j in range(1, roll.size + 1):
+            r.append(get_r_j(j))
+
+        return r[-1], path[-1]
+
+
+
+
+
+
+
+
+
+
 
         raise NotImplementedError
+
+    @staticmethod
+    def r(i, j=None):
+        if j is None:
+            return

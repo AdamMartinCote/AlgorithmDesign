@@ -24,3 +24,8 @@ class Roll:
             finally:
                 file.close()
 
+    def __getitem__(self, key) -> int:
+        # d = {cut.i: cut.p_i for cut in self.cuts}
+        # return d[key]
+
+        return self.cuts[key - 1].p_i if key else 0

@@ -10,7 +10,7 @@ class Greedy(AbstractBaseAlgo):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def execute(self, roll: Roll) -> List[Cut]:
+    def execute(self, roll: Roll) -> (int, List[Cut]):
         """
         returns the optimal list of cuts according to this algorithm
         """
