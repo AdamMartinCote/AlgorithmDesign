@@ -2,6 +2,7 @@ import time
 from functools import reduce
 from typing import List, Tuple
 
+from src.algorithms.solution import Solution
 from src.cut import Cut
 from src.roll import Roll
 
@@ -12,9 +13,9 @@ class AbstractBaseAlgo:
         self.display_price = display_price
         self.display_time = display_time
 
-    def __call__(self, roll: Roll):
+    def __call__(self, roll: Roll) -> Solution:
         start_time = time.time()
-        cuts: List[Cut] = self.execute(roll)[1]
+        cuts: List[Cut] = self.execute(roll)
         end_time = time.time()
 
         if self.display_solution:
@@ -29,5 +30,7 @@ class AbstractBaseAlgo:
         if self.display_time:
             print(end_time - start_time)
 
-    def execute(self, roll: Roll) -> Tuple[int, List[Cut]]:
+        return Solution(choices=cuts)
+
+    def execute(self, roll: Roll) -> List[Cut]:
         raise NotImplemented("class is abstract")

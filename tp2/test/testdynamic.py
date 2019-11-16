@@ -1,6 +1,9 @@
 import unittest
+from typing import List
 
 from src.algorithms.dynamic import Dynamic
+from src.algorithms.solution import Solution
+from src.cut import Cut
 from src.roll import Roll
 from test.testbase import TestBase
 from test.utils import capture_output
@@ -32,18 +35,24 @@ class TestDynamicAlgo(TestBase):
         solution_400 = self.get_solution_from_examplaire_path('../exemplaires/400-1.txt')
         self.assertEqual(400, sum(solution_400))
 
-    @unittest.skip
     def test_4000_3(self):
+        expected = [1, 2, 1139, 1363, 1495]
         roll = Roll('../exemplaires/4000-3.txt')
         algo = Dynamic(**self.price_option)
+        solution: Solution
         with capture_output() as (out, err):
-            algo(roll)
+            solution = algo(roll)
         self.assertEqual('15982\n', out.getvalue())
+        self.assertEqual(str(expected),
+                         str(solution))
 
-    @unittest.skip
     def test_30000_1(self):
+        expected = [4, 6590, 11362, 12044]
         roll = Roll('../exemplaires/30000-1.txt')
         algo = Dynamic(**self.price_option)
+        solution: Solution
         with capture_output() as (out, err):
-            algo(roll)
+            solution = algo(roll)
         self.assertEqual('119962\n', out.getvalue())
+        self.assertEqual(str(expected),
+                         str(solution))

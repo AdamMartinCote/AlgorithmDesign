@@ -2,6 +2,7 @@ import math
 from typing import List, Tuple
 
 from src.algorithms.abstractbasealgo import AbstractBaseAlgo
+from src.cut import Cut
 from src.roll import Roll
 
 
@@ -23,8 +24,8 @@ class Dynamic(AbstractBaseAlgo):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def execute(self, roll: Roll) -> Tuple[int, List[int]]:
-        path: List[List[int]] = [[]]
+    def execute(self, roll: Roll) -> List[Cut]:
+        path: List[List[Cut]] = [[]]
 
         def get_r_j(j: int) -> int:
             max_val: int = -1
@@ -41,7 +42,7 @@ class Dynamic(AbstractBaseAlgo):
         for j in range(1, roll.size + 1):
             r.append(get_r_j(j))
 
-        return r[-1], path[-1]
+        return list(reversed(path[-1]))
 
 
 
