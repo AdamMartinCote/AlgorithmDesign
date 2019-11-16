@@ -1,5 +1,4 @@
-import math
-from typing import List, Tuple
+from typing import List
 
 from src.algorithms.abstractbasealgo import AbstractBaseAlgo
 from src.cut import Cut
@@ -24,60 +23,23 @@ class Dynamic(AbstractBaseAlgo):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    # def execute(self, roll: Roll) -> List[Cut]:
-    #     path: List[List[Cut]] = [[]]
-    #
-    #     def get_r_j(j: int) -> int:
-    #         max_val: int = -1
-    #         max_i: int = 0
-    #         for i in range(1, j + 1):
-    #             local_r = roll[i] + r[j - i]
-    #             if local_r > max_val:
-    #                 max_val = local_r
-    #                 max_i = i
-    #         path.append(path[j - max_i] + [roll.cuts[max_i - 1]])
-    #         return max_val
-    #
-    #     r: List[int] = [0]
-    #     for j in range(1, roll.size + 1):
-    #         r.append(get_r_j(j))
-    #
-    #     return list(reversed(path[-1]))
-
-    def execute(self, roll: Roll):
+    def execute(self, roll: Roll) -> List[Cut]:
         paths: List[List[Cut]] = [[]]
         r: List[int] = [0]
 
         def add_row(j: int) -> None:
-            max_val: int = -1
+            max_r: int = -1
             max_i: int = 0
             for i in range(1, j + 1):
-                local_r = roll.cuts[i - 1].p_i + r[j - i]
-                if local_r > max_val:
-                    max_val = local_r
+                possible_cut = roll.cuts[i - 1]
+                local_r = possible_cut.p_i + r[j - i]
+                if local_r > max_r:
+                    max_r = local_r
                     max_i = i
             paths.append(paths[j - max_i] + [roll.cuts[max_i - 1]])
-            r.append(max_val)
-            return None
+            r.append(max_r)
 
         for j in range(1, roll.size + 1):
             add_row(j)
 
         return list(reversed(paths[-1]))
-
-
-
-
-
-
-
-
-
-
-
-        raise NotImplementedError
-
-    @staticmethod
-    def r(i, j=None):
-        if j is None:
-            return
