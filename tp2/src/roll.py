@@ -1,9 +1,14 @@
+from typing import List
+
 from src.cut import Cut
 
 
 class Roll:
     """ Un exemplaire du problème
     """
+    cuts: List[Cut]
+    size: int
+
     def __init__(self, filepath: str):
         with open(filepath) as file:
             line_1 = file.readline()
