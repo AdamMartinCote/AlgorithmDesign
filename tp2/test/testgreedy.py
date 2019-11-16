@@ -1,10 +1,11 @@
+from unittest import TestCase
+
 from src.algorithms.greedy import Greedy
 from src.roll import Roll
-from test.testbase import TestBase
 from test.utils import capture_output
 
 
-class TestGreedyAlgo(TestBase):
+class TestGreedyAlgo(TestCase):
     def setUp(self) -> None:
         self.path_1 = '../exemplaires/4000-3.txt'
         self.price_option = {'display_time': False,
@@ -20,4 +21,3 @@ class TestGreedyAlgo(TestBase):
         with capture_output() as (out, err):
             self.algo(self.roll)
         self.assertEqual('[1139, 1139, 1139, 252, 252, 47, 25, 2, 2, 2, 1]\n', out.getvalue())
-
