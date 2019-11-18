@@ -2,7 +2,6 @@ from typing import List
 
 from src.algorithms.abstractbasealgo import AbstractBaseAlgo
 from src.algorithms.greedy import Greedy
-from src.algorithms.solution import Solution
 from src.cut import Cut
 from src.roll import Roll
 
@@ -16,25 +15,32 @@ class Backtracking(AbstractBaseAlgo):
         super().__init__(**kwargs)
 
     def execute(self, roll: Roll) -> List[Cut]:
-        greedy = Greedy()
-        initial_solution: Solution = greedy(roll)
-        visited: List[Cut] = initial_solution.choices[:]
 
-        value: int = initial_solution.value
-        stack: List[Cut] = initial_solution.choices
+        best_path = self.explore_childs(roll=roll,
+                                        current_path=[],
+                                        best_path=[])
+        return best_path
 
-        return initial_solution.choices
+    def explore_childs(self, roll: Roll,
+                       current_path: List[Cut],
+                       best_path: List[Cut]) -> List[Cut]:
+        length_left = roll.size - sum(map(lambda x: x.i, current_path))
+        possible_cuts = list(filter(lambda x: x.i <= length_left, roll.cuts[1:]))
+
+        # if len(list(possible_cuts)) == 0:
+        if length_left == 0:
+            current_val = Backtracking.get_path_value(current_path)
+            best_val = Backtracking.get_path_value(best_path)
+
+            return best_path if best_val > current_val else current_path
+
+        for child in possible_cuts:
+            best_path = self.explore_childs(roll=roll,
+                                            current_path=current_path + [child],
+                                            best_path=best_path)
+
+        return best_path
 
     @staticmethod
-    def _upper_bound(self, roll: Roll, stack: List[Cut], visited: List[Cut]) -> float:
-        """
-        using bound A)
-        """
-        current_val = sum(map(lambda x: x.p_i, stack))
-        length_left = sum(map(lambda x: x.i, stack)) - roll.size
-
-        possible_cuts: List[Cut] = list(filter(lambda c: c.i <= length_left and c not in visited,
-                                               roll.cuts))
-        value_density = max(map(lambda x: x.p_i / x.i, possible_cuts))
-
-        return current_val + length_left * value_density
+    def get_path_value(path: List[Cut]):
+        return sum(map(lambda x: x.p_i, path))

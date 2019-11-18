@@ -17,4 +17,3 @@ def capture_output():
 def get_exemplaire_path_from_name(name: str) -> str:
     return f'../exemplaires/{name}.txt'
 
-def build
