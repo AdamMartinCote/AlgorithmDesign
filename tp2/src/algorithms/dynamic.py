@@ -31,12 +31,12 @@ class Dynamic(AbstractBaseAlgo):
             max_r: int = -1
             max_i: int = 0
             for i in range(1, j + 1):
-                possible_cut = roll.cuts[i - 1]
+                possible_cut = roll.cuts[i]
                 local_r = possible_cut.p_i + r[j - i]
                 if local_r > max_r:
                     max_r = local_r
                     max_i = i
-            paths.append(paths[j - max_i] + [roll.cuts[max_i - 1]])
+            paths.append(paths[j - max_i] + [roll.cuts[max_i]])
             r.append(max_r)
 
         for j in range(1, roll.size + 1):

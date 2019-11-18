@@ -21,7 +21,7 @@ class Greedy(AbstractBaseAlgo):
 
         cuts: List[Cut] = []
         while roll_length_left > 0:
-            possible_cuts = roll.cuts[:roll_length_left]
+            possible_cuts = roll.cuts[1:roll_length_left + 1]
             best_cut: Cut = reduce(get_best, possible_cuts, possible_cuts[0])
             cuts.append(best_cut)
             roll_length_left -= best_cut.i

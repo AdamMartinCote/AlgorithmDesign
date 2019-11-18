@@ -40,3 +40,22 @@ class TestDynamicAlgo(TestCase):
         self.assertEqual('119962\n', out.getvalue())
         self.assertEqual(str(expected),
                          str(solution))
+
+    def test_dynamic_better_than_greedy(self):
+        """ Ensure the DP algo alway yield equal or better results than the Greedy one"""
+
+        self.options = {'display_time': False,
+                        'display_price': False,
+                        'display_solution': False}
+
+        for exemplaire_path in exemplaires_paths:
+            self.roll = Roll(exemplaire_path)
+
+            self.algo = Greedy(**self.options)
+            greedy_solution: Solution = self.algo(self.roll)
+
+            self.algo = Dynamic(**self.options)
+            dp_solution: Solution = self.algo(self.roll)
+
+            # print(f"greedy={greedy_solution.value}, dyn={dp_solution.value}")
+            self.assertGreaterEqual(dp_solution.value, greedy_solution.value)

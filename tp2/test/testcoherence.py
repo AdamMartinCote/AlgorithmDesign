@@ -47,7 +47,7 @@ class TestCoherence(TestCase):
         self.algo = None
 
     def test_dynamic_better_than_greedy(self):
-        """ Ensure the DP algo alway yield better results that the Greedy one"""
+        """ Ensure the DP algo alway yield equal or better results than the Greedy one"""
 
         for exemplaire_path in exemplaires_paths:
             self.roll = Roll(exemplaire_path)
@@ -58,4 +58,5 @@ class TestCoherence(TestCase):
             self.algo = Dynamic(**self.options)
             dp_solution: Solution = self.algo(self.roll)
 
+            # print(f"greedy={greedy_solution.value}, dyn={dp_solution.value}")
             self.assertGreaterEqual(dp_solution.value, greedy_solution.value)

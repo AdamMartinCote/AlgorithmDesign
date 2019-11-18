@@ -16,7 +16,7 @@ class Roll:
             line_3 = file.readline()
             try:
                 self.size = int(line_1)
-                self.cuts = []
+                self.cuts = [None]
                 for cut_size, cut_worth in zip(line_2.split(),
                                                line_3.split()):
                     i = int(cut_size)

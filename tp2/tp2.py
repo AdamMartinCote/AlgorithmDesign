@@ -20,7 +20,7 @@ parser.add_argument("-p", "--show_p", action='store_true',
 parser.add_argument("-t", "--show_t", action='store_true',
                     help="affiche le temps d'exécution en ms, sans unité ni texte superflu")
 parser.add_argument("-c", "--solution", action='store_true',
-                    help="affiche la solution (coupes i choisies) sur une ligne, " 
+                    help="affiche la solution (coupes i choisies) sur une ligne, "
                          "avec chaque coupe séparée par un espace")
 args = parser.parse_args()
 
@@ -42,4 +42,3 @@ else:
 path = args.path_vers_exemplaire or default_path
 roll = Roll(path)
 algo(roll)
-
