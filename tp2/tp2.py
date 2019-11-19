@@ -38,6 +38,7 @@ elif args.algorithme == 'backtrack':
     algo = Backtracking(**options)
 else:
     parser.print_usage()
+    exit()
 
 path = args.path_vers_exemplaire or default_path
 roll = Roll(path)
