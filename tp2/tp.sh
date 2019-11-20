@@ -1,4 +1,5 @@
+#!/bin/sh
 ##
 ## This is a wraper on the python script
 ##
-./tp2.py "$@"
+python3 tp2.py "$@"

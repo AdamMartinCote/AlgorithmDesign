@@ -8,12 +8,13 @@ from src.roll import Roll
 
 
 class AbstractBaseAlgo:
-    def __init__(self, display_solution=False, display_price=False, display_time=False):
+    def __init__(self, display_solution=False, display_price=False, display_time=False, display_graphs=False):
         self.display_solution = display_solution
         self.display_price = display_price
         self.display_time = display_time
 
-    def __call__(self, roll: Roll) -> Solution:
+    # def __call__(self, roll: Roll) -> Solution:
+    def __call__(self,roll: Roll):
         start_time = time.time()
         cuts: List[Cut] = self.execute(roll)
         end_time = time.time()
@@ -30,7 +31,8 @@ class AbstractBaseAlgo:
         if self.display_time:
             print(end_time - start_time)
 
-        return Solution(choices=cuts)
+        # return Solution(choices=cuts)
+        return end_time - start_time,total_price
 
     def execute(self, roll: Roll) -> List[Cut]:
         raise NotImplemented("class is abstract")
