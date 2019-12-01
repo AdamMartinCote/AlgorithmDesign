@@ -16,6 +16,10 @@ class Exemplaire:
                 self.nCards = int(line_1)
                 self.nDecks = int(line_2)
                 self.baseQuality = list(map(int, line_3.split()))
+
+                self.synergyMatrix = []
+                for line in file:
+                    self.synergyMatrix.append(list(map(int, line.split())))
             except ValueError:
                 raise ValueError("file format error")
             finally:
