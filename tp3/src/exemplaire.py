@@ -1,0 +1,24 @@
+from typing import List
+
+
+class Exemplaire:
+    nCards: int
+    nDecks: int
+    baseQuality: List[int]
+    synergyMatrix: List[List[int]]
+
+    def __init__(self, filepath: str):
+        with open(filepath) as file:
+            line_1 = file.readline()
+            line_2 = file.readline()
+            line_3 = file.readline()
+            try:
+                self.nCards = int(line_1)
+                self.nDecks = int(line_2)
+                self.baseQuality = list(map(int, line_3.split()))
+            except ValueError:
+                raise ValueError("file format error")
+            finally:
+                file.close()
+
+
