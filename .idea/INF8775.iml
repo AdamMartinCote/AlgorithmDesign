@@ -9,7 +9,4 @@
     <orderEntry type="jdk" jdkName="Pipenv (INF8775)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
-  <component name="PyDocumentationSettings">
-    <option name="myRenderExternalDocumentation" value="true" />
-  </component>
 </module>

@@ -2,7 +2,7 @@
 
 import argparse
 
-default_path = './exemplaires/10-6.txt'
+from tp3.src.exemplaire import Exemplaire
 
 parser = argparse.ArgumentParser()
 
@@ -10,9 +10,11 @@ parser.add_argument("-e", "--path_vers_exemplaire",
                     help="specifier le chemin d'un exemplaire (fichier ou répertoire)")
 
 args = parser.parse_args()
+filepath = args.path_vers_exemplaire
 
-if args.path_vers_exemplaire is None:
+if filepath is None:
     parser.print_usage()
     exit(-1)
 
-print("foo")
+exemplaire = Exemplaire(filepath)
+

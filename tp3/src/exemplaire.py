@@ -5,7 +5,7 @@ class Exemplaire:
     nCards: int
     nDecks: int
     baseQuality: List[int]
-    synergyMatrix: List[List[int]]
+    synergyMatrix: List[List[int]]  # Use k,v ??
 
     def __init__(self, filepath: str):
         with open(filepath) as file:
