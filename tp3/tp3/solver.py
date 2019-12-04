@@ -1,4 +1,3 @@
-
 from copy import deepcopy
 
 from tp3.card import Card
@@ -12,7 +11,7 @@ def make_solution(exemplaire: Exemplaire) -> Solution:
     for i in range(0, exemplaire.nDecks):
         deck = Deck()
         for j in range(0, exemplaire.nCards):
-            flat_idx = (i * 10) + j
+            flat_idx = (i * exemplaire.nCards) + j
             deck.cards.append(Card(idx=flat_idx,
                                    base_value=exemplaire.baseQuality[flat_idx]))
         solution.decks.append(deepcopy(deck))
