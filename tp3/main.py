@@ -3,6 +3,8 @@
 import argparse
 
 from tp3.src.exemplaire import Exemplaire
+from tp3.src.solver import make_solution
+
 
 parser = argparse.ArgumentParser()
 
@@ -18,3 +20,6 @@ if filepath is None:
 
 exemplaire = Exemplaire(filepath)
 
+solution = make_solution(exemplaire)
+
+print(solution)
