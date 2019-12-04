@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from tp3.src.exemplaire import Exemplaire
+from tp3.tp3.exemplaire import Exemplaire
 
 ref_base_val = [
     2, 2, 0, 5, 2, 5, 2, 3, 4, 2, 8, 3, 3, 7, 6, 3, 2, 9, 1, 7, 9, 6, 9, 1, 7, 9, 8, 3, 5, 8, 8, 5, 0, 9, 9, 2, 4, 4, 5,

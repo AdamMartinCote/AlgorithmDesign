@@ -1,8 +1,10 @@
-from src.card import Card
-from src.deck import Deck
-from src.exemplaire import Exemplaire
-from src.solution import Solution
+
 from copy import deepcopy
+
+from tp3.card import Card
+from tp3.deck import Deck
+from tp3.exemplaire import Exemplaire
+from tp3.solution import Solution
 
 
 def make_solution(exemplaire: Exemplaire) -> Solution:

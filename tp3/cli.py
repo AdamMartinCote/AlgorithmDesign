@@ -2,8 +2,8 @@
 
 import argparse
 
-from src.exemplaire import Exemplaire
-from src.solver import make_solution
+from tp3.exemplaire import Exemplaire
+from tp3.solver import make_solution
 
 parser = argparse.ArgumentParser()
 

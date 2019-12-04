@@ -1,6 +1,5 @@
 from typing import List
-
-from src.card import Card
+from tp3.card import Card
 
 
 class Deck:
