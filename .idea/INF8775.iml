@@ -5,6 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/old_tp1" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/tp1" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/tp2" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tp3" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="Pipenv (INF8775)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

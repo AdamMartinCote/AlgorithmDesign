@@ -1,7 +1,7 @@
-from tp3.src.card import Card
-from tp3.src.deck import Deck
-from tp3.src.exemplaire import Exemplaire
-from tp3.src.solution import Solution
+from src.card import Card
+from src.deck import Deck
+from src.exemplaire import Exemplaire
+from src.solution import Solution
 from copy import deepcopy
 
 
