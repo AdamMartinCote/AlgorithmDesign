@@ -25,4 +25,5 @@ class Exemplaire:
             finally:
                 file.close()
 
-
+    def get_synergy_by_idx(self, x, y):
+        return self.synergyMatrix[x][y]

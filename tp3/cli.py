@@ -3,7 +3,7 @@
 import argparse
 
 from tp3.exemplaire import Exemplaire
-from tp3.solver import make_solution
+from tp3.solver import Solver
 
 parser = argparse.ArgumentParser()
 
@@ -19,9 +19,7 @@ if filepath is None:
 
 exemplaire = Exemplaire(filepath)
 
-solution = make_solution(exemplaire)
+solver = Solver(exemplaire)
+solution = solver()
 
 print(solution)
-
-# with open('./foo', 'w') as f:
-#     f.write(str(solution))
